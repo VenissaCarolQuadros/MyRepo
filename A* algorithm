@@ -1,10 +1,38 @@
 def Euclidian(start, finish):
     dist=((start[0]-finish[0])**2+(start[1]-finish[1])**2)**0.5
-    #Make the cost 2 so that heuristic is less than actual cost
-    return dist
+    #Make the cost/2 so that heuristic is less than actual cost
+    return dist/2
     
 def Rect(start, finish):
     dist=abs(start[0]-finish[0])+abs(start[1]-finish[1])
     return dist
     
+ def FreedomOfMovement(diag):
+    if diag:
+        moves=[[0,-1],[0,1],[-1,0],[1,0],[1,-1],[1,1],[-1,-1],[-1,1]]
+        heuristic=Euclidian
+    else:
+        moves=[[0,-1],[0,1],[-1,0],[1,0]]
+        heuristic=Rect
+    return(moves,heuristic)
     
+class Node:
+  def __init__(self, pos, parent, g, h):
+    self.position = pos
+    self.parent = parent
+    self.g=g
+    self.h=h
+    self.f=g+h
+    
+def A_Star(start, finish, map, diag=False):
+    start_node=Node(start,None,0,0,0)
+    yet_to_visit=[start_node]
+    already_visited=[]
+    moves, heuristic=FreedomOfMovement(diag)
+    position=start
+    iteration=0
+    while position!=finish:
+        iteration+=1
+        current_node=yet_to_visit[0]
+        if iteration==len(map)//2**10:
+            break
