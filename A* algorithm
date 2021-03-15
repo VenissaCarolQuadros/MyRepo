@@ -1,0 +1,10 @@
+def Euclidian(start, finish):
+    dist=((start[0]-finish[0])**2+(start[1]-finish[1])**2)**0.5
+    #Make the cost 2 so that heuristic is less than actual cost
+    return dist
+    
+def Rect(start, finish):
+    dist=abs(start[0]-finish[0])+abs(start[1]-finish[1])
+    return dist
+    
+    
